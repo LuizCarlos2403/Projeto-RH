@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Instrutor</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/Atividade-Demanda/assets/css/style.css">
+</head>
+
+<body class="bg-light">
+
+    
+    <nav class="navbar navbar-dark bg-success">
+        <div class="container">
+            <span class="navbar-brand">Painel do Instrutor</span>
+            <a href="/Atividade-Demanda/index.html" class="btn btn-light btn-sm">Sair</a>
+        </div>
+    </nav>
+
+   
+    <div class="container my-4">
+        <div class="row g-3">
+
+            
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-success">Consultar Salas</h5>
+                        <p class="card-text">Veja as salas disponíveis para reserva.</p>
+                        <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modalConsultar">
+                            Consultar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-success">Agendar Sala</h5>
+                        <p class="card-text">Reserve um horário (Manhã, Tarde ou Noite).</p>
+                        <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modalAgendar">
+                            Agendar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+           
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-success">Cancelar Agendamento</h5>
+                        <p class="card-text">Remova reservas feitas anteriormente.</p>
+                        <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modalCancelar">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="modalConsultar" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <h5 class="modal-title">Salas Disponíveis</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>Sala 01 – Informática</li>
+                        <li>Sala 02 – Biblioteca</li>
+                        <li>Sala 03 – Reuniões</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="modalAgendar" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <h5 class="modal-title">Agendar Sala</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <label class="form-label">Sala</label>
+                    <select id="agendarSala" class="form-select mb-3">
+                        <option>Sala 01</option>
+                        <option>Sala 02</option>
+                        <option>Sala 03</option>
+                    </select>
+
+                    <label class="form-label">Turno</label>
+                    <select id="agendarTurno" class="form-select mb-3">
+                        <option>Manhã</option>
+                        <option>Tarde</option>
+                        <option>Noite</option>
+                    </select>
+
+                    <button class="btn btn-success w-100" onclick="confirmarAgendamento()">
+                        Confirmar Agendamento
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="modal fade" id="modalCancelar" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cancelar Agendamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <label class="form-label">Selecione o agendamento</label>
+                    <select id="reservaCancelar" class="form-select mb-3">
+                        <option>Sala 01 – Manhã</option>
+                        <option>Sala 02 – Manhã</option>
+                        <option>Sala 03 – Manhã</option>
+                        <option>Sala 01 – Tarde</option>
+                        <option>Sala 02 – Tarde</option>
+                        <option>Sala 03 – Tarde</option>
+                        <option>Sala 01 – Noite</option>
+                        <option>Sala 02 – Noite</option>
+                        <option>Sala 03 – Noite</option>
+                    </select>
+
+                    <button  class="btn btn-danger w-100" onclick="cancelarReserva()">
+                        Cancelar Reserva
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/Atividade-Demanda/assets/js/script.js"></script>
+
+</body>
+</html>

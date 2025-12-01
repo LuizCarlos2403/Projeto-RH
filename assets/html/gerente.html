@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Administrador</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/Atividade-Demanda/assets/css/style.css">
+</head>
+
+<body class="bg-light">
+
+
+  <nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+      <span class="navbar-brand">Painel do Administrador</span>
+      <a href="/Atividade-Demanda/index.html" class="btn btn-light btn-sm">Sair</a>
+    </div>
+  </nav>
+
+  <div class="container my-4">
+
+    
+    <div class="row g-3">
+
+     
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Cadastrar Salas</h5>
+            <p class="card-text">Adicione novas salas para reservas.</p>
+            <button class="btn btn-primary w-100" onclick="mostrarCadastroSala()">Cadastrar</button>
+          </div>
+        </div>
+      </div>
+
+     
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Cadastrar Colaboradores</h5>
+            <p class="card-text">Registre professores e colaboradores.</p>
+            <button class="btn btn-primary w-100" onclick="mostrarCadastroColaborador()">Cadastrar</button>
+          </div>
+        </div>
+      </div>
+
+    
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Relatórios</h5>
+            <p class="card-text">Visualize as salas cadastradas.</p>
+            <button class="btn btn-primary w-100" onclick="gerarRelatorio()">Gerar Relatório</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+   
+    <div id="formSala" class="mt-4 p-3 border rounded bg-white" style="display:none;">
+      <h4 class="text-primary">Cadastrar Nova Sala</h4>
+      <input type="text" id="nomeSala" class="form-control mt-2" placeholder="Nome da Sala">
+      <button class="btn btn-success mt-3" onclick="cadastrarSala()">Salvar Sala</button>
+    </div>
+
+    
+    <div id="formColaborador" class="mt-4 p-3 border rounded bg-white" style="display:none;">
+      <h4 class="text-primary">Cadastrar Colaborador</h4>
+      <input type="text" id="nomeColaborador" class="form-control mt-2" placeholder="Nome do Colaborador">
+      <button class="btn btn-success mt-3" onclick="cadastrarColaborador()">Salvar Colaborador</button>
+    </div>
+
+    
+    <div id="relatorio" class="mt-4 p-3 border rounded bg-white" style="display:none;">
+      <h4 class="text-primary">Relatório de Salas Cadastradas</h4>
+      <ul id="listaRelatorio"></ul>
+    </div>
+
+  </div>
+
+  <script src="/Atividade-Demanda/assets/js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
