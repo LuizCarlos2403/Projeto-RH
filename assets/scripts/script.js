@@ -1,39 +1,38 @@
-let colaboradores = JSON.parse(localStorage.getItem("colaboradores")) ||
-  [
-    {
-      id: 1,
-      nome: "jorginho",
-      senha: "jorginho",
-      telefone: "00000000000",
-      endereco: "morro toramento",
-      cargo: "imunda",
-      bdate: "12/01/2000",
-    }
-  ];
+// ====================== DADOS INICIAIS ======================
+let colaboradores = JSON.parse(localStorage.getItem("colaboradores")) || [
+  {
+    id: 1,
+    nome: "jorginho",
+    senha: "jorginho",
+    telefone: "(11) 90000-0000",
+    endereco: "morro toramento",
+    cargo: "Operador",
+    bdate: "2000-01-12",
+  }
+];
 
-function funcao() {
-  console.log(colaboradores);
+// salva no localStorage sempre que muda colaboradores
+function salvarColaboradores() {
+  localStorage.setItem("colaboradores", JSON.stringify(colaboradores));
 }
-funcao()
 
+// ====================== LOGIN (opcional - caso use index.html) ======================
 function login() {
-  const user = document.getElementById("usuario").value;
-  const pass = document.getElementById("senha").value;
+  const user = document.getElementById("usuario").value.trim();
+  const pass = document.getElementById("senha").value.trim();
 
-  // Login do gerente continua igual
+  // gerente
   if (user === "gerente" && pass === "123") {
     localStorage.setItem("tipoUsuario", "gerente");
     window.location.href = "pages/gerente.html";
     return;
   }
 
-  //  Verifica colaboradores cadastrados no localStorage
-  let colaborador = colaboradores.find(c => c.nome === user && c.senha === pass);
-
-  if (colaborador) {
+  // colaborador cadastrado
+  let col = colaboradores.find(c => c.nome === user && c.senha === pass);
+  if (col) {
     localStorage.setItem("tipoUsuario", "funcionario");
-    localStorage.setItem("usuarioAtual", colaborador.nome);
-
+    localStorage.setItem("usuarioAtual", col.nome);
     window.location.href = "pages/funcionario.html";
     return;
   }
@@ -41,118 +40,263 @@ function login() {
   alert("Usuário ou senha inválidos!");
 }
 
-function exibirNome() {
-  let nome = localStorage.getItem("usuarioAtual");
-  document.getElementById("nomeAtual").innerText = "Painel do Funcionário " + nome || "Usuário";
-}
-
+// ====================== GERENTE: CADASTRO ======================
 function mostrarCadastroColaborador() {
   document.getElementById("formColaborador").style.display = "block";
-  document.getElementById("relatorio").style.display = "none"
+  document.getElementById("formHolerite") && (document.getElementById("formHolerite").style.display = "none");
 }
 
 function cadastrarColaborador() {
-  var nome = document.getElementById("nomeColaborador").value;
-  var senha = document.getElementById("senhaColaborador").value;
-  var telefone = document.getElementById("telefoneColaborador").value;
-  var endereco = document.getElementById("enderecoColaborador").value;
-  var cargo = document.getElementById("cargoColaborador").value;
-  var bdate = document.getElementById("nascimentoColaborador").value;
+  let nome = document.getElementById("nomeColaborador").value.trim();
+  let senha = document.getElementById("senhaColaborador").value.trim();
+  let telefone = document.getElementById("telefoneColaborador").value.trim();
+  let endereco = document.getElementById("enderecoColaborador").value.trim();
+  let cargo = document.getElementById("cargoColaborador").value.trim();
+  let bdate = document.getElementById("nascimentoColaborador").value;
 
-  if (nome === "") {
-    alert("Digite o nome do colaborador!");
-    return;
-  }
-  if (senha === "") {
-    alert("Digite a senha do colaborador!");
-    return;
-  }
-  if (telefone === "") {
-    alert("Digite o telefone do colaborador!");
-    return;
-  }
-  if (endereco === "") {
-    alert("Digite o endereço do colaborador!");
-    return;
-  }
-  if (cargo === "") {
-    alert("Digite o cargo do colaborador!");
-    return;
-  }
-  if (bdate === "") {
-    alert("Digite a data de nascimento do colaborador!");
+  if (!nome || !senha || !telefone || !endereco || !cargo || !bdate) {
+    alert("Preencha todos os campos!");
     return;
   }
 
-  var novoColaborador = {
+  colaboradores.push({
     id: colaboradores.length + 1,
-    nome: nome,
-    senha: senha,
-    telefone: telefone,
-    endereco: endereco,
-    cargo: cargo,
-    bdate: bdate
-  };
+    nome, senha, telefone, endereco, cargo, bdate
+  });
 
-  colaboradores.push(novoColaborador);
-
-
-  localStorage.setItem("colaboradores", JSON.stringify(colaboradores));
-
-  alert("Colaborador cadastrado: " + nome);
+  salvarColaboradores();
+  alert("Colaborador cadastrado com sucesso!");
+  // limpa campos
+  document.getElementById("nomeColaborador").value = "";
+  document.getElementById("senhaColaborador").value = "";
+  document.getElementById("telefoneColaborador").value = "";
+  document.getElementById("enderecoColaborador").value = "";
+  document.getElementById("cargoColaborador").value = "";
+  document.getElementById("nascimentoColaborador").value = "";
 }
 
-//Holerite
+// ====================== GERENTE: HOLERITE ======================
 function mostrarFormularioHolerite() {
   document.getElementById("formHolerite").style.display = "block";
-  document.getElementById("formColaborador").style.display = "none";
-  document.getElementById("resultadoHolerite").style.display = "none";
+  document.getElementById("formColaborador") && (document.getElementById("formColaborador").style.display = "none");
+  document.getElementById("resultadoHolerite") && (document.getElementById("resultadoHolerite").style.display = "none");
 }
 
 function gerarHolerite() {
-  let nome = document.getElementById("nomeFuncionario").value;
-  let salario = Number(document.getElementById("salarioFuncionario").value);
-  let horasExtras = Number(document.getElementById("horasExtras").value);
-  let descontos = Number(document.getElementById("descontosGerais").value);
+  let nome = document.getElementById("nomeFuncionario").value.trim();
+  let salario = Number(document.getElementById("salarioFuncionario").value) || 0;
+  let horasExtras = Number(document.getElementById("horasExtras").value) || 0;
+  let descontos = Number(document.getElementById("descontosGerais").value) || 0;
 
   if (!nome || !salario) {
     alert("Preencha o nome e o salário!");
     return;
   }
 
-  // Cálculos
+  let col = colaboradores.find(c => c.nome === nome);
+  if (!col) {
+    alert("Funcionário não encontrado. Cadastre-o antes.");
+    return;
+  }
+
   let inss = salario * 0.08;
   let irrf = salario * 0.075;
   let salarioLiquido = salario + horasExtras - inss - irrf - descontos;
 
-  // Preenchendo os spans
-  document.getElementById("r_nome").innerText = nome;
-  document.getElementById("r_salario").innerText = "R$ " + salario.toFixed(2);
-  document.getElementById("r_extras").innerText = "R$ " + horasExtras.toFixed(2);
-  document.getElementById("r_inss").innerText = "R$ " + inss.toFixed(2);
-  document.getElementById("r_irrf").innerText = "R$ " + irrf.toFixed(2);
-  document.getElementById("r_desc").innerText = "R$ " + descontos.toFixed(2);
-  document.getElementById("r_liquido").innerText = "R$ " + salarioLiquido.toFixed(2);
+  const holerite = { nome, salario, horasExtras, descontos, inss, irrf, salarioLiquido, geradoEm: new Date().toISOString() };
+  localStorage.setItem("holerite_" + nome, JSON.stringify(holerite));
 
-
+  // exibir resultado no gerente
+  document.getElementById("r_nome").innerText = holerite.nome;
+  document.getElementById("r_salario").innerText = `R$ ${holerite.salario.toFixed(2)}`;
+  document.getElementById("r_extras").innerText = `R$ ${holerite.horasExtras.toFixed(2)}`;
+  document.getElementById("r_inss").innerText = `R$ ${holerite.inss.toFixed(2)}`;
+  document.getElementById("r_irrf").innerText = `R$ ${holerite.irrf.toFixed(2)}`;
+  document.getElementById("r_desc").innerText = `R$ ${holerite.descontos.toFixed(2)}`;
+  document.getElementById("r_liquido").innerText = `R$ ${holerite.salarioLiquido.toFixed(2)}`;
   document.getElementById("resultadoHolerite").style.display = "block";
+
+  alert("Holerite gerado e salvo para " + nome);
+  // limpa campos
+  document.getElementById("nomeFuncionario").value = "";
+  document.getElementById("salarioFuncionario").value = "";
+  document.getElementById("horasExtras").value = "";
+  document.getElementById("descontosGerais").value = "";
 }
-//Holerite
 
-const telefone = document.getElementById("telefone");
+// ====================== GERENTE: RESCISÃO ======================
+function preencherSelectColaboradores() {
+  const sel = document.getElementById("selectColaboradorRescisao");
+  sel.innerHTML = "";
+  colaboradores.forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c.nome;
+    opt.innerText = c.nome + " — " + c.cargo;
+    sel.appendChild(opt);
+  });
+}
 
-telefone.addEventListener("input", function () {
-  let valor = telefone.value;
+function monthsBetween(d1, d2) {
+  // d1 < d2
+  let months = (d2.getFullYear() - d1.getFullYear()) * 12;
+  months += d2.getMonth() - d1.getMonth();
+  // if day of d2 >= day of d1 count current month as full month else not
+  if (d2.getDate() >= d1.getDate()) months += 1;
+  return Math.max(0, months);
+}
 
-  // Remove tudo que não for número
-  valor = valor.replace(/\D/g, "");
+function gerarRescisao() {
+  const nome = document.getElementById("selectColaboradorRescisao").value;
+  const adm = document.getElementById("rescisao_admissao").value;
+  const dem = document.getElementById("rescisao_demissao").value;
+  const salario = Number(document.getElementById("rescisao_salario").value) || 0;
+  const feriasVencidas = document.getElementById("rescisao_feriasVencidas").value === "sim";
+  const aviso = document.getElementById("rescisao_aviso").value; // indenizado/trabalhado
 
-  // Aplica máscara (xx) xxxxx-xxxx
-  if (valor.length > 10) {
-    valor = valor.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
-  } else {
-    valor = valor.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+  if (!nome || !adm || !dem || !salario) {
+    alert("Preencha funcionário, datas e salário!");
+    return;
   }
 
-  telefone.value = valor;
+  const dtAdm = new Date(adm);
+  const dtDem = new Date(dem);
+  if (dtDem < dtAdm) { alert("Data de demissão deve ser posterior à admissão."); return; }
+
+  // cálculo simples:
+  const diasTrabalhadosNoMes = dtDem.getDate(); // assume dias no mês até data de demissão
+  const saldo = (salario / 30) * diasTrabalhadosNoMes;
+
+  // meses trabalhados no ano corrente (para 13º e férias proporcionais)
+  const mesesTotais = monthsBetween(dtAdm, dtDem); // meses completos aproximados
+  const mesesAno = Math.min(12, mesesTotais % 12 === 0 ? 12 : mesesTotais % 12); // aproximação
+
+  const decimo = (salario / 12) * mesesAno;
+  const feriasProp = (salario / 12) * mesesAno;
+  const feriasPropTotal = feriasProp * (4/3); // incluindo 1/3 adicional
+
+  const feriasVencidasValor = feriasVencidas ? salario * (4/3) : 0; // salário + 1/3
+
+  // FGTS sobre as verbas (simplificado: 8% sobre salário)
+  const fgtsBase = salario * 0.08;
+  const multaFgts = fgtsBase * 0.4;
+
+  // Aviso prévio: se indenizado, considera 1 salário a mais
+  const avisoValor = aviso === "indenizado" ? salario : 0;
+
+  // total (simplificado)
+  const total = saldo + decimo + feriasPropTotal + feriasVencidasValor + avisoValor + multaFgts;
+
+  const rescisao = {
+    nome, adm, dem, salario,
+    saldo, decimo, feriasPropTotal, feriasVencidasValor, fgtsBase, multaFgts, avisoValor, total,
+    geradoEm: new Date().toISOString()
+  };
+
+  localStorage.setItem("rescisao_" + nome, JSON.stringify(rescisao));
+  alert("Rescisão calculada e salva para " + nome);
+  // fecha modal automaticamente se quiser: bootstrap modal will be closed manually by user
+}
+
+// ====================== FUNCIONÁRIO: CARREGAR/EDITAR DADOS ======================
+function carregarDadosFuncionario() {
+  const nome = localStorage.getItem("usuarioAtual");
+  if (!nome) return;
+
+  const col = colaboradores.find(c => c.nome === nome);
+  document.getElementById("nomeAtual").innerText = "Painel do Funcionário - " + nome;
+
+  if (!col) return;
+
+  // preencher campos do modal
+  const elem = document.getElementById("d_nome");
+  if (elem) elem.value = col.nome;
+  const ecargo = document.getElementById("d_cargo");
+  if (ecargo) ecargo.value = col.cargo;
+  const telefone = document.getElementById("telefone");
+  if (telefone) telefone.value = col.telefone;
+  const endereco = document.getElementById("endereco");
+  if (endereco) endereco.value = col.endereco;
+  const bdate = document.getElementById("bdate");
+  if (bdate) {
+    // if stored as YYYY-MM-DD or other, try to set
+    bdate.value = col.bdate;
+  }
+}
+
+function salvarEdicao() {
+  const nome = localStorage.getItem("usuarioAtual");
+  if (!nome) return;
+  const col = colaboradores.find(c => c.nome === nome);
+  if (!col) return;
+
+  const telefone = document.getElementById("telefone").value.trim();
+  const endereco = document.getElementById("endereco").value.trim();
+  const bdate = document.getElementById("bdate").value;
+
+  col.telefone = telefone;
+  col.endereco = endereco;
+  col.bdate = bdate;
+
+  salvarColaboradores();
+  alert("Seus dados foram atualizados.");
+}
+
+// ====================== FUNCIONÁRIO: VER HOLERITE ======================
+function mostrarHoleriteFuncionario() {
+  const nome = localStorage.getItem("usuarioAtual");
+  if (!nome) { alert("Usuário não identificado."); return; }
+  const hol = JSON.parse(localStorage.getItem("holerite_" + nome));
+  if (!hol) { alert("Nenhum holerite disponível."); return; }
+
+  document.getElementById("h_nome").innerText = hol.nome;
+  document.getElementById("h_salario").innerText = `R$ ${hol.salario.toFixed(2)}`;
+  document.getElementById("h_extras").innerText = `R$ ${hol.horasExtras.toFixed(2)}`;
+  document.getElementById("h_inss").innerText = `R$ ${hol.inss.toFixed(2)}`;
+  document.getElementById("h_irrf").innerText = `R$ ${hol.irrf.toFixed(2)}`;
+  document.getElementById("h_desc").innerText = `R$ ${hol.descontos.toFixed(2)}`;
+  document.getElementById("h_liquido").innerText = `R$ ${hol.salarioLiquido.toFixed(2)}`;
+
+  document.getElementById("holeriteFuncionario").style.display = "block";
+}
+
+// ====================== FUNCIONÁRIO: VER RESCISÃO ======================
+function mostrarRescisaoFuncionario() {
+  const nome = localStorage.getItem("usuarioAtual");
+  if (!nome) { alert("Usuário não identificado."); return; }
+  const rc = JSON.parse(localStorage.getItem("rescisao_" + nome));
+  if (!rc) { alert("Nenhuma rescisão encontrada."); return; }
+
+  document.getElementById("rc_admissao").innerText = rc.adm;
+  document.getElementById("rc_demissao").innerText = rc.dem;
+  document.getElementById("rc_salario").innerText = `R$ ${rc.salario.toFixed(2)}`;
+
+  document.getElementById("rc_saldo").innerText = `R$ ${rc.saldo.toFixed(2)}`;
+  document.getElementById("rc_ferias_vencidas").innerText = `R$ ${rc.feriasVencidasValor ? rc.feriasVencidasValor.toFixed(2) : (rc.feriasVencidasValor === 0 ? "R$ 0.00" : "")}` || `R$ ${rc.feriasVencidasValor ? rc.feriasVencidasValor.toFixed(2) : "0.00"}`;
+  document.getElementById("rc_ferias_prop").innerText = `R$ ${rc.feriasPropTotal ? rc.feriasPropTotal.toFixed(2) : rc.feriasPropTotal}`;
+  document.getElementById("rc_13").innerText = `R$ ${rc.decimo ? rc.decimo.toFixed(2) : "0.00"}`;
+  document.getElementById("rc_fgts").innerText = `R$ ${rc.fgtsBase ? rc.fgtsBase.toFixed(2) : "0.00"}`;
+  document.getElementById("rc_multa").innerText = `R$ ${rc.multaFgts ? rc.multaFgts.toFixed(2) : "0.00"}`;
+
+  document.getElementById("rc_total").innerText = `R$ ${rc.total.toFixed(2)}`;
+
+  document.getElementById("rescisaoFuncionario").style.display = "block";
+}
+
+// ====================== MÁSCARA TELEFONE GLOBAL ======================
+document.addEventListener("input", function (e) {
+  if (!e.target) return;
+  const id = e.target.id;
+  if (id === "telefone" || id === "telefoneColaborador") {
+    let v = e.target.value.replace(/\D/g, "");
+    if (v.length > 10) v = v.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
+    else v = v.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+    e.target.value = v;
+  }
 });
+
+// ====================== INICIALIZAÇÃO (caso queira popular selects etc.) ======================
+(function init() {
+  // garante que colaboradores do localStorage sejam sincronizados
+  const stored = JSON.parse(localStorage.getItem("colaboradores"));
+  if (stored) colaboradores = stored;
+})();

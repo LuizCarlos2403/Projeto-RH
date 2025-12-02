@@ -2,12 +2,12 @@
    PALETA MODERNA (ROXO + BRANCO)
 ===============================*/
 :root {
-    --primary: #ff6200;
-    --primary-dark: #f4a700;
-    --primary-light: #ede6ff;
+    --primary: #7b2cbf;
+    --primary-dark: #5a189a;
+    --primary-light: #e9d8fd;
 
     --white: #ffffff;
-    --light-bg: #f3f3f3;
+    --light-bg: #faf7ff;
     --text-dark: #1e1e1e;
     --text-light: #666;
 
@@ -17,9 +17,6 @@
     --shadow-strong: rgba(0,0,0,0.25);
 }
 
-/* ============================
-   GERAL
-===============================*/
 body, html {
     margin: 0;
     padding: 0;
@@ -28,159 +25,39 @@ body, html {
     color: var(--text-dark);
 }
 
-/* ============================
-   NAVBAR
-===============================*/
+/* NAVBAR */
 .navbar {
     background: var(--primary) !important;
-    padding: 15px 0;
+    padding: 12px 0;
     box-shadow: 0 3px 10px var(--shadow);
 }
+.navbar-brand { font-weight: 600; font-size: 1.1rem; color: var(--white) !important; }
 
-.navbar-brand {
-    font-weight: 600;
-    font-size: 1.3rem;
-}
+/* Buttons */
+.btn { border-radius: 10px !important; padding: 10px 14px; font-weight: 600; transition: .2s; }
+.btn-primary, .btn-success { background: var(--primary) !important; border: none !important; color: #fff; }
+.btn-primary:hover, .btn-success:hover { background: var(--primary-dark) !important; transform: scale(1.02); }
+.btn-danger { background: var(--danger) !important; color: #fff; }
 
-/* ============================
-   BOTÕES
-===============================*/
-.btn {
-    border-radius: 10px !important;
-    padding: 10px 14px;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: .2s;
-}
+/* Cards */
+.card { border-radius: 14px; border: none; background: var(--white); box-shadow: 0 6px 16px var(--shadow); transition: .25s; }
+.card:hover { transform: translateY(-6px); box-shadow: 0 10px 24px var(--shadow-strong); }
+.card-body { padding: 20px; }
+.card-title { color: var(--primary); font-weight: 700; }
 
-.btn-primary,
-.btn-success {
-    background: var(--primary) !important;
-    border: none !important;
-}
+/* Forms */
+.form-control, .form-select { border-radius: 10px !important; padding: 10px; border: 1px solid #ddd; transition: .2s; }
+.form-control:focus, .form-select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(123,44,191,0.08); }
 
-.btn-primary:hover,
-.btn-success:hover {
-    background: var(--primary-dark) !important;
-    transform: scale(1.03);
-}
+/* Modal custom */
+.modal-content { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+.modal-header { background: var(--primary); color: var(--white); border-radius: 12px 12px 0 0; }
 
-.btn-danger {
-    background: var(--danger) !important;
-    border: none !important;
-}
+/* small helpers */
+.sub { color: #c300ff; }
+.bg-white { background: var(--white) !important; }
 
-/* ============================
-   CARDS
-===============================*/
-.card {
-    border-radius: 18px;
-    border: none;
-    background: var(--white);
-    box-shadow: 0 4px 12px var(--shadow);
-    transition: .25s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px var(--shadow-strong);
-}
-
-.card-body {
-    padding: 25px;
-}
-
-.card-title {
-    color: var(--primary) !important;
-    font-size: 1.2rem;
-    font-weight: 700;
-}
-
-/* ============================
-   INPUTS
-===============================*/
-.form-control,
-.form-select {
-    border-radius: 10px !important;
-    padding: 10px;
-    border: 1px solid #ccc;
-    transition: .3s;
-}
-
-.form-control:focus,
-.form-select:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(255, 132, 0, 0.25);
-}
-
-/* ============================
-   FORMULÁRIOS EXPANSÍVEIS
-===============================*/
-.box-container {
-    background: var(--white);
-    padding: 22px;
-    border-radius: 16px;
-    box-shadow: 0 4px 14px var(--shadow);
-    display: none;
-    animation: fadeIn .35s ease;
-}
-
-/* ============================
-   MODAL
-===============================*/
-.modal-content {
-    border-radius: 16px;
-    box-shadow: 0 6px 20px var(--shadow-strong);
-}
-
-.modal-header {
-    background: var(--primary);
-    color: var(--white);
-    border-radius: 16px 16px 0 0;
-}
-
-/* ============================
-   LISTA
-===============================*/
-ul li {
-    padding: 6px 0;
-    transition: .2s;
-}
-
-ul li:hover {
-    color: var(--primary);
-    padding-left: 6px;
-}
-
-/* ============================
-   ANIMAÇÃO
-===============================*/
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ============================
-   LOGIN – CENTRALIZADO E LINDO
-===============================*/
-.login-container {
-    width: 95%;
-    max-width: 380px;
-    background: var(--white);
-    padding: 30px;
-    border-radius: 18px;
-    box-shadow: 0 5px 20px var(--shadow);
-}
-
-/* RESPONSIVIDADE */
+/* Responsividade */
 @media (max-width: 768px) {
-    .card {
-        margin-bottom: 15px;
-    }
-
-    #formColaborador,
-    #formHolerite,
-    #resultadoHolerite {
-        padding: 15px !important;
-    }
+  .card { margin-bottom: 12px; }
 }
