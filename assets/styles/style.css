@@ -2,8 +2,8 @@
    PALETA MODERNA (ROXO + BRANCO)
 ===============================*/
 :root {
-    --primary: #7b2cbf;
-    --primary-dark: #5a189a;
+    --primary: #089b76;
+    --primary-dark: #07c2af;
     --primary-light: #e9d8fd;
 
     --white: #ffffff;
@@ -13,16 +13,18 @@
 
     --danger: #e63946;
 
-    --shadow: rgba(0,0,0,0.15);
-    --shadow-strong: rgba(0,0,0,0.25);
+    --shadow: rgba(0, 0, 0, 0.15);
+    --shadow-strong: rgba(0, 0, 0, 0.25);
 }
 
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     font-family: "Poppins", sans-serif;
     background: var(--light-bg);
     color: var(--text-dark);
+    
 }
 
 /* NAVBAR */
@@ -31,33 +33,101 @@ body, html {
     padding: 12px 0;
     box-shadow: 0 3px 10px var(--shadow);
 }
-.navbar-brand { font-weight: 600; font-size: 1.1rem; color: var(--white) !important; }
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--white) !important;
+}
 
 /* Buttons */
-.btn { border-radius: 10px !important; padding: 10px 14px; font-weight: 600; transition: .2s; }
-.btn-primary, .btn-success { background: var(--primary) !important; border: none !important; color: #fff; }
-.btn-primary:hover, .btn-success:hover { background: var(--primary-dark) !important; transform: scale(1.02); }
-.btn-danger { background: var(--danger) !important; color: #fff; }
+.btn {
+    border-radius: 10px !important;
+    padding: 10px 14px;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.btn-primary,
+.btn-success {
+    background: var(--primary) !important;
+    border: none !important;
+    color: #fff;
+}
+
+.btn-primary:hover,
+.btn-success:hover {
+    background: var(--primary-dark) !important;
+    transform: scale(1.02);
+}
+
+.btn-danger {
+    background: var(--danger) !important;
+    color: #fff;
+}
 
 /* Cards */
-.card { border-radius: 14px; border: none; background: var(--white); box-shadow: 0 6px 16px var(--shadow); transition: .25s; }
-.card:hover { transform: translateY(-6px); box-shadow: 0 10px 24px var(--shadow-strong); }
-.card-body { padding: 20px; }
-.card-title { color: var(--primary); font-weight: 700; }
+.card {
+    border-radius: 14px;
+    border: none;
+    background: var(--white);
+    box-shadow: 0 6px 16px var(--shadow);
+    transition: .25s;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 24px var(--shadow-strong);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    color: var(--primary);
+    font-weight: 700;
+}
 
 /* Forms */
-.form-control, .form-select { border-radius: 10px !important; padding: 10px; border: 1px solid #ddd; transition: .2s; }
-.form-control:focus, .form-select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(123,44,191,0.08); }
+.form-control,
+.form-select {
+    border-radius: 10px !important;
+    padding: 10px;
+    border: 1px solid #ddd;
+    transition: .2s;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(123, 44, 191, 0.08);
+}
 
 /* Modal custom */
-.modal-content { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
-.modal-header { background: var(--primary); color: var(--white); border-radius: 12px 12px 0 0; }
+.modal-content {
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.modal-header {
+    background: var(--primary);
+    color: var(--white);
+    border-radius: 12px 12px 0 0;
+}
 
 /* small helpers */
-.sub { color: #c300ff; }
-.bg-white { background: var(--white) !important; }
+.sub {
+    color: #047a5e;
+}
+
+.bg-white {
+    background: var(--white) !important;
+}
 
 /* Responsividade */
 @media (max-width: 768px) {
-  .card { margin-bottom: 12px; }
+    .card {
+        margin-bottom: 12px;
+    }
 }
