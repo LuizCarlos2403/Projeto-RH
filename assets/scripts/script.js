@@ -99,8 +99,36 @@ function gerarHolerite() {
     return;
   }
 
-  let inss = salario * 0.08;
-  let irrf = salario * 0.075;
+  // ===== CÁLCULO DO INSS POR FAIXA =====
+  let inss = 0;
+  if (salario <= 1412.00) {
+    inss = salario * 0.075;
+  } else if (salario <= 2666.68) {
+    inss = salario * 0.09;
+  } else if (salario <= 4000.03) {
+    inss = salario * 0.12;
+  } else {
+    inss = salario * 0.14;
+  }
+
+  // ===== CÁLCULO DO IRRF POR FAIXA =====
+  let irrf = 0;
+  let baseIR = salario - inss;
+
+  if (baseIR <= 2259.20) {
+    irrf = 0;
+  } else if (baseIR <= 2826.65) {
+    irrf = (baseIR * 0.075) - 169.44;
+  } else if (baseIR <= 3751.05) {
+    irrf = (baseIR * 0.15) - 381.44;
+  } else if (baseIR <= 4664.68) {
+    irrf = (baseIR * 0.225) - 662.77;
+  } else {
+    irrf = (baseIR * 0.275) - 896.00;
+  }
+
+  if (irrf < 0) irrf = 0; // garante que não fique negativo
+
   let salarioLiquido = salario + horasExtras - inss - irrf - descontos;
 
   const holerite = { nome, salario, horasExtras, descontos, inss, irrf, salarioLiquido, geradoEm: new Date().toISOString() };
@@ -172,9 +200,9 @@ function gerarRescisao() {
 
   const decimo = (salario / 12) * mesesAno;
   const feriasProp = (salario / 12) * mesesAno;
-  const feriasPropTotal = feriasProp * (4/3); // incluindo 1/3 adicional
+  const feriasPropTotal = feriasProp * (4 / 3); // incluindo 1/3 adicional
 
-  const feriasVencidasValor = feriasVencidas ? salario * (4/3) : 0; // salário + 1/3
+  const feriasVencidasValor = feriasVencidas ? salario * (4 / 3) : 0; // salário + 1/3
 
   // FGTS sobre as verbas (simplificado: 8% sobre salário)
   const fgtsBase = salario * 0.08;
